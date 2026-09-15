@@ -78,15 +78,72 @@ A proof establishes inclusion in an accepted remote state. It does not independe
 
 ```
 ERC8415/
-├── EIPS/
+├── ERCS/erc-8415-asynchronous-register-projection.md   spec text, ethereum/ERCs form
+├── EIPS/eip-8415.md                                    spec text, ethereum/EIPs form
 ├── interfaces/
-├── reference/
-├── test/
-├── RATIONALE.md
-├── COMPARISON.md
-├── SECURITY.md
+│   ├── IRegisterProjection.sol                         projection queries
+│   └── IProjectionSettlement.sol                       settlement lifecycle
+├── reference/RegisterProjectionReference.sol           reference implementation
+├── test/protocol.cjs                                   invariant tests
+├── watchtower/                                         freshness layer, separate toolchain
+├── scripts/                                            lint, verification and build scripts
+├── RATIONALE.md                                        why the design is shaped this way
+├── COMPARISON.md                                       how it differs from adjacent standards
+├── SECURITY.md                                         trust assumptions and attack surface
 └── README.md
 ```
+
+The spec text is kept in two forms because the upstream repositories differ: `ERCS/` follows the
+`ethereum/ERCs` conventions and `EIPS/` follows `ethereum/EIPs`, including how each links sibling
+proposals. Both carry the same content and must be updated together.
+
+### The `watchtower/` directory
+
+`watchtower/` holds an implementation of a freshness layer: a registry that accepts EIP-712 signed
+watchtower attestations, enforces strictly monotonic sequencing per asset feed, honours
+block-scoped signing-key rotation, and classifies the recorded head as `STALE`, `FRESH_PENDING` or
+`FRESH_FINAL`. See `watchtower/README.md`.
+
+It is self-contained and carries its own Foundry and Hardhat setup, so it is built and tested from
+its own directory. The root `compile` reads `./interfaces` and the root `test` reads `./test`;
+neither reaches into it. The repository-wide `lint`, `check-imports` and `secret-scan` checks do
+cover it.
+
+## Building and Verifying
+
+Requires Node 20.
+
+```sh
+npm ci
+npm run verify:all
+```
+
+`verify:all` runs, in order:
+
+| Step | What it checks |
+| --- | --- |
+| `lint` | SPDX identifier and pragma on every Solidity file; LF endings, no tabs, no trailing whitespace, trailing newline everywhere; ASCII-only Solidity |
+| `compile` | Compiles `interfaces/` with solc 0.8.26 and flattens the artifacts |
+| `verify:constants` | Recomputes each interface ID from the compiled ABI and compares it against the frozen value |
+| `verify:secret-scan` | Every tracked file is on the publication allowlist, and no file carries a private key or token |
+| `verify:imports` | No absolute imports, and no relative import escapes the package |
+| `test` | Invariant tests against the reference implementation |
+| `build` | Writes `dist/` with the ABIs, interface IDs, spec text, and a manifest carrying a sha256 per file |
+
+CI runs the same sequence on every push to `main` and on every pull request.
+
+### Frozen interface IDs
+
+`verify:constants` fails if either value moves, so a published identifier cannot change unnoticed:
+
+| Interface | ERC-165 identifier |
+| --- | --- |
+| `IRegisterProjection` | `0x6309e170` |
+| `IProjectionSettlement` | `0xf4a7d71b` |
+
+Each is the XOR of the selectors the interface adds, excluding `supportsInterface`.
+
+Tests for the watchtower layer are run separately, from `watchtower/`.
 
 ## Status
 
@@ -101,3 +158,9 @@ Feedback is welcome regarding:
 - projection gap handling;
 - verification profiles;
 - interoperability with existing Ethereum standards.
+
+Discussion: [Ethereum Magicians](https://ethereum-magicians.org/t/working-draft-asynchronous-register-projection-for-nfts/29634).
+
+## License
+
+[CC0-1.0](LICENSE).
