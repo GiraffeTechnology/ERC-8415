@@ -1,9 +1,9 @@
 {
-  "name": "erc-9999",
+  "name": "erc-8415",
   "version": "0.1.0",
   "private": false,
   "license": "CC0-1.0",
-  "description": "ERC-9999 Asynchronous Register Projection for NFTs — interfaces, reference implementation and invariant tests",
+  "description": "ERC-8415 Asynchronous Register Projection for NFTs — interfaces, reference implementation and invariant tests",
   "scripts": {
     "lint": "node scripts/lint.js",
     "compile": "hardhat compile && node scripts/flatten-artifacts.js",

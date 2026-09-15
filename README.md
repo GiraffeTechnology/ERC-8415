@@ -5,7 +5,7 @@
 This repository contains a public Ethereum ERC working draft for **Asynchronous Register Projection for NFTs**.
 
 **Status:** Discussion Draft  
-**ERC Number:** Not assigned
+**ERC Number:** 8415
 
 This repository is a standards proposal repository. It is not a product repository and does not represent an adopted Ethereum standard.
 
@@ -77,7 +77,7 @@ A proof establishes inclusion in an accepted remote state. It does not independe
 ## Repository Structure
 
 ```
-ERC9999/
+ERC8415/
 ├── EIPS/
 ├── interfaces/
 ├── reference/
@@ -92,7 +92,7 @@ ERC9999/
 
 This repository contains an initial technical discussion draft.
 
-No ERC number has been assigned.
+This proposal uses ERC number 8415.
 
 Feedback is welcome regarding:
 

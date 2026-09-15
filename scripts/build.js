@@ -32,7 +32,7 @@ for (const name of NAMES) {
   ids[name] = toBeHex(value, 4);
 }
 
-fs.copyFileSync(path.join(ROOT, 'EIPS', 'eip-9999.md'), path.join(DIST, 'eip-9999.md'));
+fs.copyFileSync(path.join(ROOT, 'EIPS', 'eip-8415.md'), path.join(DIST, 'eip-8415.md'));
 
 const sha256 = (p) => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 const files = [];
@@ -45,7 +45,7 @@ const files = [];
 })(DIST);
 
 const manifest = {
-  name: 'erc-9999',
+  name: 'erc-8415',
   interfaceIds: ids,
   files: Object.fromEntries(
     files.map((f) => [path.relative(DIST, f).split(path.sep).join('/'), sha256(f)])

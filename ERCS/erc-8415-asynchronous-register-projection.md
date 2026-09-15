@@ -1,5 +1,5 @@
 ---
-eip: 9999
+eip: 8415
 title: Asynchronous Register Projection for NFTs
 description: Projects an asynchronous off-chain register onto ERC-721 so any past instant resolves to one confirmed holder
 author: Michael Yip (@GiraffeTechnology)
