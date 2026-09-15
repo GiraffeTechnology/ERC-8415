@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
-const ALLOWED = new Set([".github/workflows/ci.yml",".gitignore","EIPS/eip-8415.md","LICENSE","README.md","hardhat.config.cjs","interfaces/IProjectionSettlement.sol","interfaces/IRegisterProjection.sol","package-lock.json","package.json","reference/RegisterProjectionReference.sol","scripts/build.js","scripts/check-frozen-erc-constants.js","scripts/check-imports.js","scripts/flatten-artifacts.js","scripts/lint.js","scripts/secret-scan.js","test/protocol.cjs"]);
+const ALLOWED = new Set([".github/workflows/ci.yml",".gitignore","COMPARISON.md","EIPS/eip-8415.md","ERCS/erc-8415-asynchronous-register-projection.md","LICENSE","RATIONALE.md","README.md","SECURITY.md","hardhat.config.cjs","interfaces/IProjectionSettlement.sol","interfaces/IRegisterProjection.sol","package-lock.json","package.json","reference/RegisterProjectionReference.sol","scripts/build.js","scripts/check-frozen-erc-constants.js","scripts/check-imports.js","scripts/flatten-artifacts.js","scripts/lint.js","scripts/secret-scan.js","test/protocol.cjs"]);
 const SKIP = new Set(['.git', 'node_modules', 'artifacts', 'cache', 'dist']);
 const failures = [];
 function walk(dir) {
