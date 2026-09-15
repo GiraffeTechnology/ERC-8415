@@ -1,0 +1,15 @@
+# Foundry
+.gitmodules
+foundry.lock
+out/
+cache/
+lib/
+broadcast/
+
+# Hardhat / Node
+node_modules/
+cache-hardhat/
+artifacts/
+typechain-types/
+coverage/
+coverage.json
